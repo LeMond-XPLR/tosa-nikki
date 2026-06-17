@@ -5,9 +5,8 @@
 
 ## 公開URL
 
-https://ユーザー名.github.io/tosa-nikki/
+https://LeMond-XPLR.github.io/tosa-nikki/
 
-※GitHub Pages を有効にすると発行されるURLに書き換えてください。
 
 ## 内容・構成
 
