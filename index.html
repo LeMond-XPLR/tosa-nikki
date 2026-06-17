@@ -1,0 +1,459 @@
+<!--
+  このファイルは『土佐日記をたどる』のWebサイトです。
+  ダウンロードして、ブラウザ（Chrome や Edge など）で開いてください。
+  ※写真はインターネット上から読み込むため、表示にはネット接続が必要です。
+-->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>土佐日記をたどる ｜ 1000年前の旅日記を、今の高知で</title>
+<meta name="description" content="紀貫之『土佐日記』に出てくる場所・情景・心を、今の高知でたどる地域文化サイト。帰京の海路、ゆかりの地、和歌に表れた気持ちを紹介します。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700;800&family=Noto+Serif+JP:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --washi:#f2ead8;        /* 和紙色（背景） */
+    --washi-card:#f8f2e4;    /* やや明るい和紙（カード） */
+    --washi-deep:#e7dcc1;    /* 濃い和紙（境界） */
+    --sumi:#2b2925;          /* 墨色（本文） */
+    --sumi-soft:#54504a;     /* やわらかい墨（補足） */
+    --ai:#1e4d5e;            /* 深い藍（見出し・土佐の海の深み） */
+    --mizu:#5ea6bd;          /* 水色（高知の海と空・アクセント） */
+    --mizu-pale:#bfe0e8;     /* 淡い水色 */
+    --shu:#b5453b;           /* 朱色（落款・印） */
+    --maxw:1080px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background-color:var(--washi);
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    color:var(--sumi);
+    font-family:"Noto Serif JP", serif;
+    font-weight:400;
+    line-height:1.95;
+    letter-spacing:.02em;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+  h1,h2,h3{font-family:"Shippori Mincho B1", serif;font-weight:700;line-height:1.4;letter-spacing:.04em;}
+  a{color:var(--ai);text-decoration:none;}
+  img{max-width:100%;display:block;}
+
+  /* ---- eyebrow / 小見出し ---- */
+  .eyebrow{
+    font-family:"Shippori Mincho B1", serif;
+    font-size:.8rem;letter-spacing:.42em;color:var(--mizu);
+    text-indent:.42em;margin:0 0 14px;font-weight:500;
+  }
+
+  /* ---- 波の区切り線 ---- */
+  .tide{display:block;width:100%;height:26px;color:var(--mizu);opacity:.55;}
+  .tide svg{display:block;width:100%;height:100%;}
+
+  /* ===== HERO ===== */
+  .hero{position:relative;overflow:hidden;color:#fff;}
+  .hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:var(--ai);}
+  .hero::after{ /* 和紙＋藍のウォッシュ */
+    content:"";position:absolute;inset:0;
+    background:
+      linear-gradient(180deg, rgba(16,46,58,.30) 0%, rgba(16,46,58,.55) 62%, rgba(30,77,94,.80) 100%),
+      radial-gradient(120% 80% at 20% 10%, rgba(242,234,216,.10), transparent 55%);
+  }
+  .hero-inner{position:relative;z-index:2;max-width:var(--maxw);margin:0 auto;
+    padding:128px 28px 120px;}
+  .hero .eyebrow{color:var(--mizu-pale);}
+  .hero-title{
+    font-family:"Shippori Mincho B1", serif;font-weight:800;
+    font-size:clamp(2.9rem,8.5vw,6rem);line-height:1.12;margin:0;
+    text-shadow:0 2px 30px rgba(0,0,0,.35);letter-spacing:.06em;
+  }
+  .hero-title .quote{font-size:.62em;opacity:.92;}
+  .hero-copy{
+    font-family:"Shippori Mincho B1", serif;font-weight:500;
+    font-size:clamp(1.05rem,2.6vw,1.5rem);margin:26px 0 0;max-width:30ch;
+    line-height:1.85;text-shadow:0 1px 18px rgba(0,0,0,.4);
+  }
+  .hero-sub{font-size:.98rem;color:rgba(255,255,255,.86);margin:22px 0 0;max-width:46ch;line-height:1.9;}
+  .hero-cred{position:absolute;z-index:2;right:14px;bottom:10px;font-size:.66rem;
+    color:rgba(255,255,255,.8);letter-spacing:.02em;}
+  .hero-cred a{color:rgba(255,255,255,.9);text-decoration:underline;text-underline-offset:2px;}
+
+  /* 落款（朱印） */
+  .seal{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:58px;height:58px;border-radius:7px;
+    background:var(--shu);color:#fbeee2;
+    font-family:"Shippori Mincho B1", serif;font-weight:700;
+    font-size:1.5rem;line-height:1;letter-spacing:0;
+    writing-mode:vertical-rl;padding:6px 0;
+    box-shadow:0 1px 0 rgba(0,0,0,.15);transform:rotate(-1.5deg);
+    text-align:center;
+  }
+  .hero-seal{position:relative;z-index:2;margin-top:40px;}
+
+  /* ===== SECTION 共通 ===== */
+  section{padding:84px 0;}
+  .sec-head{margin:0 0 34px;}
+  .sec-head h2{
+    font-size:clamp(1.7rem,4.2vw,2.5rem);color:var(--ai);margin:0;
+  }
+  .lead{font-size:1.04rem;color:var(--sumi);max-width:62ch;margin:0;}
+  .lead.soft{color:var(--sumi-soft);}
+
+  /* ===== とは ===== */
+  .about{background:linear-gradient(180deg, var(--washi) 0%, #efe6d1 100%);}
+  .about-grid{display:grid;grid-template-columns:1fr;gap:30px;}
+  .opening{
+    background:var(--washi-card);border:1px solid var(--washi-deep);
+    border-left:4px solid var(--mizu);
+    padding:30px 32px;border-radius:4px;margin-top:10px;
+  }
+  .opening .orig{
+    font-family:"Shippori Mincho B1", serif;font-size:1.3rem;color:var(--ai);
+    line-height:2;margin:0 0 14px;letter-spacing:.06em;
+  }
+  .opening .trans{font-size:.98rem;color:var(--sumi-soft);margin:0;}
+  .facts{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px;}
+  .fact{background:var(--washi-card);border:1px solid var(--washi-deep);border-radius:4px;padding:22px 20px;text-align:center;}
+  .fact .num{font-family:"Shippori Mincho B1", serif;font-weight:800;font-size:2rem;color:var(--mizu);line-height:1;}
+  .fact .lab{font-size:.86rem;color:var(--sumi-soft);margin-top:10px;}
+
+  /* ===== 旅程 タイムライン ===== */
+  .journey .lead{margin-bottom:8px;}
+  .timeline{position:relative;margin-top:46px;padding-left:30px;}
+  .timeline::before{content:"";position:absolute;left:7px;top:var(--rail-top,16px);height:var(--rail-height,calc(100% - 56px));width:2px;
+    background:linear-gradient(180deg,var(--mizu),var(--mizu-pale));}
+  .stop{position:relative;margin:0 0 40px;}
+  .stop::before{content:"";position:absolute;left:-22px;top:8px;transform:translateX(-50%);
+    width:16px;height:16px;border-radius:50%;
+    background:var(--washi);border:3px solid var(--mizu);}
+  .stop .old{font-family:"Shippori Mincho B1", serif;font-size:.78rem;color:var(--shu);letter-spacing:.12em;margin:0 0 2px;}
+  .stop h3{font-size:1.32rem;color:var(--ai);margin:0 0 4px;}
+  .stop .now{font-size:.85rem;color:var(--mizu);font-weight:500;margin:0 0 12px;letter-spacing:.04em;}
+  .stop p{margin:0 0 14px;font-size:.98rem;color:var(--sumi);}
+  .stop.has-photo{
+    background:var(--washi-card);box-shadow:0 0 0 1px var(--washi-deep);border-radius:6px;
+    padding:24px 26px;
+  }
+  .stop.has-photo::before{top:30px;}
+  .photo{margin:6px 0 4px;border-radius:4px;overflow:hidden;border:1px solid var(--washi-deep);background:#dfe9ec;}
+  .photo img{width:100%;height:240px;object-fit:cover;}
+  figure{margin:0;}
+  figcaption{font-size:.72rem;color:var(--sumi-soft);margin-top:7px;line-height:1.6;letter-spacing:.01em;}
+  figcaption a{text-decoration:underline;text-underline-offset:2px;color:var(--sumi-soft);}
+  .photo-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px;}
+  .photo-row .photo img{height:175px;}
+
+  .maplink{
+    display:inline-flex;align-items:center;gap:7px;
+    font-size:.82rem;font-weight:500;color:var(--ai);
+    border:1px solid var(--mizu);border-radius:999px;padding:6px 16px;
+    transition:background .18s ease,color .18s ease;
+  }
+  .maplink:hover{background:var(--mizu);color:#fff;}
+  .maplink svg{width:14px;height:14px;}
+  .arrive{position:relative;padding-left:0;margin-top:6px;}
+  .arrive .old{color:var(--mizu);}
+  .arrive h3{font-size:1.15rem;}
+
+  /* ===== 気持ち / 和歌 ===== */
+  .heart{background:linear-gradient(180deg,#102e3a 0%, #1e4d5e 100%);color:#f3ecdb;}
+  .heart .eyebrow{color:var(--mizu-pale);}
+  .heart .sec-head h2{color:#fbeee2;}
+  .heart .lead{color:#e2ddcf;}
+  .waka{
+    display:grid;grid-template-columns:auto 1fr;gap:34px;align-items:start;
+    background:var(--washi-card);color:var(--sumi);
+    border-radius:6px;padding:34px 36px;margin-top:34px;
+    box-shadow:0 18px 50px rgba(0,0,0,.28);
+  }
+  .waka-vert{position:relative;writing-mode:vertical-rl;text-orientation:upright;
+    font-family:"Shippori Mincho B1", serif;font-weight:700;
+    font-size:clamp(1.15rem,3.4vw,1.6rem);color:var(--ai);
+    line-height:2.05;letter-spacing:.22em;height:auto;min-height:230px;
+    padding-left:4px;}
+  .waka-vert .seal{position:absolute;left:-4px;bottom:0;writing-mode:horizontal-tb;width:42px;height:42px;font-size:1.05rem;transform:rotate(-3deg);}
+  .waka-read .ku{font-family:"Shippori Mincho B1", serif;font-size:1rem;color:var(--mizu);letter-spacing:.08em;margin:0 0 14px;}
+  .waka-read .yaku{font-size:1rem;color:var(--sumi);margin:0 0 14px;}
+  .waka-read .memo{font-size:.92rem;color:var(--sumi-soft);margin:0;border-top:1px dashed var(--washi-deep);padding-top:14px;}
+  .waka-read .memo b{color:var(--shu);font-weight:600;}
+  .waka-extra{margin-top:26px;font-size:.96rem;color:#dfd9cb;border-left:3px solid var(--mizu);padding:6px 0 6px 18px;}
+  .waka-extra .o{font-family:"Shippori Mincho B1", serif;color:#fbeee2;font-size:1.05rem;letter-spacing:.06em;}
+
+  /* ===== 問いかけ ===== */
+  .closing{background:#efe6d1;text-align:center;}
+  .closing h2{color:var(--ai);font-size:clamp(1.6rem,4.5vw,2.3rem);margin:0 0 22px;}
+  .closing p{max-width:50ch;margin:0 auto;font-size:1.05rem;color:var(--sumi);line-height:2;}
+  .closing .big{font-family:"Shippori Mincho B1", serif;font-weight:700;font-size:clamp(1.3rem,4vw,1.9rem);color:var(--shu);margin:0 0 26px;letter-spacing:.04em;}
+
+  /* ===== footer ===== */
+  footer{background:#22201c;color:#cfc8b8;padding:60px 0 50px;font-size:.86rem;line-height:1.85;}
+  footer h3{color:#f3ecdb;font-size:1rem;letter-spacing:.1em;margin:0 0 14px;}
+  footer .cols{display:block;}
+  footer ul{margin:0;padding:0;list-style:none;}
+  footer li{margin:0 0 12px;}
+  footer a{color:var(--mizu-pale);text-decoration:underline;text-underline-offset:2px;}
+  .note{margin-top:34px;padding-top:22px;border-top:1px solid #3a372f;color:#9b9485;font-size:.78rem;}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1;transform:none;}
+
+  @media (max-width:760px){
+    .facts{grid-template-columns:1fr;}
+    .waka{grid-template-columns:1fr;gap:24px;}
+    .waka-vert{min-height:200px;justify-self:center;}
+    section{padding:62px 0;}
+    .hero-inner{padding:96px 28px 92px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    .reveal{opacity:1;transform:none;transition:none;}
+    .maplink{transition:none;}
+  }
+  :focus-visible{outline:3px solid var(--mizu);outline-offset:2px;border-radius:3px;}
+</style>
+</head>
+<body>
+
+<!-- ===== HERO ===== -->
+<header class="hero">
+  <img class="hero-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/Katsurahama.jpg?width=1800" alt="高知市浦戸の桂浜。太平洋に面した砂浜と松。">
+  <div class="hero-inner">
+    <p class="eyebrow">高知県・土佐日記ゆかりの地めぐり</p>
+    <h1 class="hero-title"><span class="quote">『</span>土佐日記<span class="quote">』</span>をたどる</h1>
+    <p class="hero-copy">1000年前の旅日記を、<br>今の高知でたどってみよう。</p>
+    <p class="hero-sub">紀貫之が船で京へ帰った、承平の旅。その時に見た風景と、書き残した心は、いまも高知の海岸線に残っています。</p>
+    <div class="hero-seal"><span class="seal">土佐</span></div>
+  </div>
+  <p class="hero-cred">写真：桂浜（高知市浦戸）／ Tzu-hsun Hsu, <a href="https://commons.wikimedia.org/wiki/File:Katsurahama.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0</p>
+</header>
+
+<div class="tide"><svg viewBox="0 0 1200 26" preserveAspectRatio="none" aria-hidden="true"><path d="M0,13 C100,3 200,23 300,13 C400,3 500,23 600,13 C700,3 800,23 900,13 C1000,3 1100,23 1200,13" fill="none" stroke="currentColor" stroke-width="2"/></svg></div>
+
+<!-- ===== 土佐日記とは ===== -->
+<section class="about">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">まずはここから</p>
+      <h2>『土佐日記』ってなに？</h2>
+    </div>
+    <div class="about-grid">
+      <p class="lead reveal">いまから約1100年前（935年ごろ）、<b>紀貫之（きのつらゆき）</b>が、土佐＝今の高知県での国司の任期を終え、京（今の京都）まで船で帰った<b>約55日間の旅</b>をつづった日記です。<br>記録のための堅い漢文ではなく、日本でいちばん古い「<b>かな（ひらがな）で書かれた日記</b>」として知られています。</p>
+      <div class="opening reveal">
+        <p class="orig">男もすなる日記といふものを、女もしてみむとてするなり。</p>
+        <p class="trans">＝「男の人が書くという日記を、女の私も書いてみよう」。実は作者の貫之は男性。<b>わざと女性のふり</b>をして、当時は女性のものとされた仮名で、旅の本音やおかしさ、悲しみを自由に書きました。だから土佐日記は、勉強のための古典というより、<b>気持ちがにじむ旅の日記</b>なのです。</p>
+      </div>
+      <div class="facts">
+        <div class="fact reveal"><div class="num">935<span style="font-size:1rem;">頃</span></div><div class="lab">成立した年（平安時代）</div></div>
+        <div class="fact reveal"><div class="num">約55<span style="font-size:1rem;">日</span></div><div class="lab">土佐から京までの船旅</div></div>
+        <div class="fact reveal"><div class="num">約60<span style="font-size:1rem;">首</span></div><div class="lab">ちりばめられた和歌</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 海の道をたどる ===== -->
+<section class="journey">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">旅の場面と高知のつながり</p>
+      <h2>海の道をたどる</h2>
+      <p class="lead soft" style="margin-top:14px;">貫之の船は、高知の海岸線を東へ進みました。日記に出てくる地名は、今もそのまま地図にあります。気になる場所は地図リンクから行ってみよう。</p>
+    </div>
+
+    <div class="timeline">
+      <div class="stop reveal">
+        <p class="old">承平四年 十二月二十七日</p>
+        <h3>大津・舟戸 ― 出航の地</h3>
+        <p class="now">▶ 今の 高知市大津</p>
+        <p>国府を出て、船出の港へ。見送りの人々が磯に下りて酒をくみ交わし、別れを惜しみました。旅のはじまりの場所です。大津小学校の近くには「紀貫之 舟出の地」の碑が立っています。</p>
+        <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=紀貫之舟出の地+高知市大津" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1112 6a2.5 2.5 0 010 5.5z"/></svg>Googleマップで見る</a>
+      </div>
+
+      <div class="stop has-photo reveal">
+        <p class="old">十二月二十七日</p>
+        <h3>浦戸 ― 最初の停泊地</h3>
+        <p class="now">▶ 今の 高知市浦戸（桂浜のそば）</p>
+        <p>大津を出て、その日のうちにたどり着いた港。今の桂浜のあたりです。ここで土佐の内海をぬけ、目の前に太平洋が一気に開けます。「これから長い海の旅だ」という気持ちになる場所。</p>
+        <figure class="photo">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Katsura-hama%20(6453615435).jpg?width=1200" alt="桂浜から望む太平洋の波打ち際" loading="lazy">
+          <figcaption>桂浜（高知市浦戸）　写真：Maarten Heerlien / <a href="https://commons.wikimedia.org/wiki/File:Katsura-hama_(6453615435).jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY 2.0</figcaption>
+        </figure>
+        <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=桂浜+高知市浦戸" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1112 6a2.5 2.5 0 010 5.5z"/></svg>Googleマップで見る</a>
+      </div>
+
+      <div class="stop reveal">
+        <p class="old">十二月二十九日 ～ 正月</p>
+        <h3>大湊 ― 年越しと、足止め</h3>
+        <p class="now">▶ 今の 南国市前浜あたり（諸説あり・大湊公園）</p>
+        <p>この港で新年を迎えます。ところが悪天候が続き、なんと約10日間も出航できず足止め。早く帰りたいのに進めない、もどかしい日々が日記につづられます。場所には諸説あり、今は大湊公園が整備されています。</p>
+        <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=大湊公園+南国市" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1112 6a2.5 2.5 0 010 5.5z"/></svg>Googleマップで見る</a>
+      </div>
+
+      <div class="stop reveal">
+        <p class="old">正月 十日</p>
+        <h3>奈半（なは） ― 順風の港</h3>
+        <p class="now">▶ 今の 安芸郡奈半利町</p>
+        <p>ようやく順風に乗り、半日で一気に進んで着いた港。奈半利橋の東には「土佐日記那波泊（なはのとまり）」と記された石碑が残っていて、ここが旅の通り道だったことを今に伝えています。</p>
+        <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=奈半利橋+奈半利町" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1112 6a2.5 2.5 0 010 5.5z"/></svg>Googleマップで見る</a>
+      </div>
+
+      <div class="stop reveal">
+        <p class="old">正月 十一日</p>
+        <h3>羽根 ― 望郷の歌が生まれた地</h3>
+        <p class="now">▶ 今の 室戸市羽根町（羽根岬）</p>
+        <p>船の中で、幼い子が「羽根」という地名を聞き、「鳥の羽みたいに飛んで都へ帰れたら」と歌をよみます（次の章で紹介）。早く帰りたい一行の本音を、子どもの言葉が代弁した場面。羽根岬には、この歌の歌碑があります。</p>
+        <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=羽根岬+室戸市羽根町" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1112 6a2.5 2.5 0 010 5.5z"/></svg>Googleマップで見る</a>
+      </div>
+
+      <div class="stop reveal">
+        <p class="old">正月 十二日 ～</p>
+        <h3>室津 ― 風を待つ港</h3>
+        <p class="now">▶ 今の 室戸市室津</p>
+        <p>京へ向かう外海へ出るための港。しかし天気も日もちが悪く、何日も停泊が続きます。出ようとしては引き返し、乗客たちもだんだん憂うつに。貫之が名づけたと伝わる「梅香（まいご）の井戸」も残ります。</p>
+        <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=室津港+室戸市室津" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1112 6a2.5 2.5 0 010 5.5z"/></svg>Googleマップで見る</a>
+      </div>
+
+      <div class="stop has-photo reveal">
+        <p class="old">室戸岬を廻る</p>
+        <h3>室戸岬 ― 航海の難所</h3>
+        <p class="now">▶ 今の 室戸市・室戸岬</p>
+        <p>波風が荒く、潮の流れも速い、当時から知られた航海の難所。ここを廻れば、土佐の国ともいよいよお別れです。今は荒々しい岩場が世界ジオパークとして知られ、灯台や弘法大師伝説の海食洞「御厨人窟（みくろど）」もあります。</p>
+        <figure class="photo">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Muroto%20Cape.JPG?width=1200" alt="室戸岬の荒々しい岩場と太平洋" loading="lazy">
+          <figcaption>室戸岬（室戸市）　写真：Nobunaga24 / <a href="https://commons.wikimedia.org/wiki/File:Muroto_Cape.JPG" target="_blank" rel="noopener">Wikimedia Commons</a>, パブリックドメイン</figcaption>
+        </figure>
+        <div class="photo-row">
+          <figure class="photo">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Murotomisaki%20Lighthouse%2003.jpg?width=900" alt="室戸岬灯台" loading="lazy">
+            <figcaption>室戸岬灯台　写真：Motokoka / <a href="https://commons.wikimedia.org/wiki/File:Murotomisaki_Lighthouse_03.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0</figcaption>
+          </figure>
+          <figure class="photo">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Mikurodo,%20Sea%20Cave%2001.jpg?width=900" alt="御厨人窟（みくろど）の海食洞" loading="lazy">
+            <figcaption>御厨人窟（室戸市）　写真：Naokijp / <a href="https://commons.wikimedia.org/wiki/File:Mikurodo,_Sea_Cave_01.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0</figcaption>
+          </figure>
+        </div>
+        <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=室戸岬+室戸市" target="_blank" rel="noopener" style="margin-top:8px;"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1112 6a2.5 2.5 0 010 5.5z"/></svg>Googleマップで見る</a>
+      </div>
+
+      <div class="stop arrive reveal">
+        <p class="old">そして、海路はるばる</p>
+        <h3>京（京都）へ。</h3>
+        <p>室戸岬を廻った船は、土佐泊（今の徳島）をへて、淡路島・難波・住吉…と進み、約55日かけてついに京の都へ。旅の終わりには、忘れられない一場面が待っていました。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="tide"><svg viewBox="0 0 1200 26" preserveAspectRatio="none" aria-hidden="true"><path d="M0,13 C100,3 200,23 300,13 C400,3 500,23 600,13 C700,3 800,23 900,13 C1000,3 1100,23 1200,13" fill="none" stroke="currentColor" stroke-width="2"/></svg></div>
+
+<!-- ===== 気持ち / 和歌 ===== -->
+<section class="heart">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">文章に表れた心</p>
+      <h2>本音が、見える。</h2>
+      <p class="lead" style="margin-top:14px;">土佐日記が1000年読みつがれてきたのは、景色だけでなく貫之の「心」が書かれているから。とくに、<b>土佐で亡くした幼い娘</b>への思いが、旅のあちこちでそっと顔を出します。</p>
+    </div>
+
+    <div class="waka reveal">
+      <div class="waka-vert">まことにて<br>名に聞く所<br>羽根ならば<br>飛ぶがごとくに<br>都へもがな<span class="seal">羽根</span></div>
+      <div class="waka-read">
+        <p class="ku">― 羽根の地で、幼い子がよんだ歌</p>
+        <p class="yaku">「本当に〈羽根〉という名のとおりなら、鳥の羽のように飛んで、早く都へ帰りたいなあ。」</p>
+        <p class="memo"><b>ポイント</b>　地名「羽根」と「鳥の羽」をかけた歌。早く帰りたいという一行みんなの本音を、幼い子の言葉が代わりに言ってくれた場面です。そしてこの子の姿は、土佐で亡くした娘を貫之に思い出させます。</p>
+      </div>
+    </div>
+
+    <div class="waka reveal">
+      <div class="waka-vert">生まれしも<br>帰らぬものを<br>わが宿に<br>小松のあるを<br>見るが悲しさ<span class="seal">京</span></div>
+      <div class="waka-read">
+        <p class="ku">― 京の我が家に着いて</p>
+        <p class="yaku">「この家で生まれた娘はもう帰ってこないのに、庭に小さな松が新しく生えているのを見ると、悲しくてたまらない。」</p>
+        <p class="memo"><b>ポイント</b>　やっと京の家に着いたら、家は荒れ果てていた。庭に芽吹いた<b>小松</b>と、京で生まれ土佐で亡くなった<b>娘</b>を重ねています。再会を喜ぶ人々のかげで、貫之はひそかに妻と悲しみを分かち合いました。</p>
+      </div>
+    </div>
+
+    <div class="waka-extra reveal">
+      <p class="o">見し人の 松の千年に 見ましかば 遠く悲しき 別れせましや</p>
+      もう一首。「あの子が、松のように千年も生きられたなら、こんな遠い土佐で悲しい別れをすることもなかっただろうに」。一度では気持ちがおさまらず、貫之はもう一度、娘への思いを歌にしました。
+    </div>
+  </div>
+</section>
+
+<!-- ===== 問いかけ ===== -->
+<section class="closing">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="big">あなたなら、この旅の何を日記に書く？</p>
+      <h2>1000年前、貫之は船の上で本音を書いた。</h2>
+      <p>スマホでなんでも記録できる今、あなたの「土佐の旅日記」には何が残るだろう。海岸線をたどりながら、写真だけじゃなく、自分の言葉も少し残してみてほしい。きっと1000年前の貫之と、ちょっとだけ気持ちが重なる。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== footer ===== -->
+<footer>
+  <div class="wrap cols">
+    <div>
+      <h3>写真の引用（クレジット）</h3>
+      <ul>
+        <li>桂浜（高知市浦戸・ヒーロー画像）／ Tzu-hsun Hsu, <a href="https://commons.wikimedia.org/wiki/File:Katsurahama.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>（<a href="https://creativecommons.org/licenses/by-sa/4.0/deed.ja" target="_blank" rel="noopener">CC BY-SA 4.0</a>）</li>
+        <li>桂浜（高知市浦戸）／ Maarten Heerlien, <a href="https://commons.wikimedia.org/wiki/File:Katsura-hama_(6453615435).jpg" target="_blank" rel="noopener">Wikimedia Commons</a>（<a href="https://creativecommons.org/licenses/by/2.0/deed.ja" target="_blank" rel="noopener">CC BY 2.0</a>）</li>
+        <li>室戸岬（室戸市）／ Nobunaga24, <a href="https://commons.wikimedia.org/wiki/File:Muroto_Cape.JPG" target="_blank" rel="noopener">Wikimedia Commons</a>（パブリックドメイン）</li>
+        <li>室戸岬灯台／ Motokoka, <a href="https://commons.wikimedia.org/wiki/File:Murotomisaki_Lighthouse_03.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>（<a href="https://creativecommons.org/licenses/by-sa/4.0/deed.ja" target="_blank" rel="noopener">CC BY-SA 4.0</a>）</li>
+        <li>御厨人窟（室戸市）／ Naokijp, <a href="https://commons.wikimedia.org/wiki/File:Mikurodo,_Sea_Cave_01.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>（<a href="https://creativecommons.org/licenses/by-sa/4.0/deed.ja" target="_blank" rel="noopener">CC BY-SA 4.0</a>）</li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap note">
+    本サイトは、高校の探究学習「地域の文学を知る『土佐日記』探訪」の課題として制作した学習用の作品です（非公式）。地名・旅程・和歌の解釈は諸説ある場合があります。写真はクリエイティブ・コモンズ等で公開された画像を、各ライセンスに従って引用しています。
+  </div>
+</footer>
+
+<script>
+  (function(){
+    // --- タイムラインの縦線を「最初の◯の中心〜最後の◯の中心」で引く ---
+    function placeRail(){
+      var tl = document.querySelector('.timeline'); if(!tl) return;
+      var stops = tl.querySelectorAll('.stop'); if(stops.length < 2) return;
+      function center(el){ return el.offsetTop + (el.classList.contains('has-photo') ? 38 : 16); }
+      var first = center(stops[0]);
+      var last  = center(stops[stops.length - 1]);
+      tl.style.setProperty('--rail-top', first + 'px');
+      tl.style.setProperty('--rail-height', (last - first) + 'px');
+    }
+    placeRail();
+    window.addEventListener('load', placeRail);
+    window.addEventListener('resize', placeRail);
+
+    // --- スクロールでの出現・消失 ---
+    var els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      els.forEach(function(e){ e.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){
+          // 表示する（下から入る＝出現アニメーション／上から戻る＝既にinのまま＝無アニメーション）
+          en.target.classList.add('in');
+        } else if(en.boundingClientRect.top >= 0){
+          // 画面下部から外れたときだけ消失。画面下端より少し内側で発火させ、消失が見えるようにする。
+          en.target.classList.remove('in');
+        }
+      });
+    }, { threshold: 0, rootMargin: '0px 0px -25% 0px' });
+    els.forEach(function(e){ io.observe(e); });
+  })();
+</script>
+</body>
+</html>
